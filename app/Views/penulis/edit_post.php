@@ -36,7 +36,7 @@
                     </div>
 
                     <fieldset>
-                        <div class="form-group">
+                        <div class="form-group d-none">
                             <label for="disabledIdPenulis">Id Penulis: (<i>Anda tidak perlu merubahnya</i>)</label>
                             <input type="text" class="form-control" id="disabledIdPenulis" name="disabledIdPenulis" value="<?php echo $row->idpenulis; ?>">
                         </div>
