@@ -1,25 +1,35 @@
-<?php namespace App\Models;
+<?php
+
+namespace App\Models;
 
 use CodeIgniter\Model;
 
 class AdminModel extends Model
 {
+    protected $table      = 'post';
+    protected $primaryKey = 'idpost';
+    protected $useTimestamps = true;
+    protected $allowedFields = ['judul', 'idkategori', 'isi_post', 'gambar', 'idpenulis'];
+    protected $createdField  = 'tgl_insert';
+    protected $updatedField  = 'tgl_update';
+    protected $dateFormat = 'date';
+
     /*** Category  ***/
-    public function getCategory($id=false)
-	{
-		if($id === false){
-			$query = $this->db->query('SELECT * FROM kategori');
-			$results = $query->getResult();
-		}else{
-			$query = $this->db->query("SELECT * FROM kategori WHERE idkategori=".$id." ");
-			$results = $query->getRow();
-		}
-		return $results;
+    public function getCategory($id = false)
+    {
+        if ($id === false) {
+            $query = $this->db->query('SELECT * FROM kategori');
+            $results = $query->getResult();
+        } else {
+            $query = $this->db->query("SELECT * FROM kategori WHERE idkategori=" . $id . " ");
+            $results = $query->getRow();
+        }
+        return $results;
     }
-    
+
     public function editCategory($data, $id)
     {
-        $query = $this->db->table('kategori')->update($data,['idkategori' => $id]);
+        $query = $this->db->table('kategori')->update($data, ['idkategori' => $id]);
         return $query;
     }
 
@@ -36,16 +46,16 @@ class AdminModel extends Model
     }
 
     /*** Penulis ***/
-    public function getPenulis($id=false)
+    public function getPenulis($id = false)
     {
-        if($id === false){
-			$query = $this->db->table('penulis')->get();
-			$results = $query->getResult();
-		}else{
-			$query = $this->db->table('penulis')->getWhere(['idpenulis' => $id]);
-			$results = $query->getRow();
-		}
-		return $results;
+        if ($id === false) {
+            $query = $this->db->table('penulis')->get();
+            $results = $query->getResult();
+        } else {
+            $query = $this->db->table('penulis')->getWhere(['idpenulis' => $id]);
+            $results = $query->getRow();
+        }
+        return $results;
     }
 
     public function getPenulisByEmail($email)
@@ -58,25 +68,25 @@ class AdminModel extends Model
 
     public function reset($data, $id)
     {
-        $query = $this->db->table('penulis')->update($data,['idpenulis' => $id]);
+        $query = $this->db->table('penulis')->update($data, ['idpenulis' => $id]);
         return $query;
     }
 
     public function editProfile($data, $id)
     {
-        $query = $this->db->table('penulis')->update($data,['idpenulis' => $id]);
+        $query = $this->db->table('penulis')->update($data, ['idpenulis' => $id]);
         return $query;
     }
 
     public function editPassword($data, $id)
     {
-        $query = $this->db->table('penulis')->update($data,['idpenulis' => $id]);
+        $query = $this->db->table('penulis')->update($data, ['idpenulis' => $id]);
         return $query;
     }
 
     public function cekPassword($password, $id)
     {
-        $query = $this->db->query("SELECT * FROM penulis WHERE idpenulis=".$id." AND password='".$password."'");
+        $query = $this->db->query("SELECT * FROM penulis WHERE idpenulis=" . $id . " AND password='" . $password . "'");
         $result = $query->getRow();
         return $result;
     }
@@ -87,8 +97,8 @@ class AdminModel extends Model
         $builder = $this->db->table('post');
         $builder->join('kategori', 'post.idkategori = kategori.idkategori');
         $query = $builder->getWhere(['idpenulis' => $id]);
-		$results = $query->getResult();
-		return $results;
+        $results = $query->getResult();
+        return $results;
     }
 
     public function getPost($idpost)
@@ -102,13 +112,14 @@ class AdminModel extends Model
 
     public function editPost($data, $id)
     {
-        $query = $this->db->table('post')->update($data,['idpost' => $id]);
+        $query = $this->db->table('post')->update($data, ['idpost' => $id]);
         return $query;
     }
 
     public function addPost($data)
     {
-        $query = $this->db->table('post')->insert($data);
+        //$query = $this->db->table('post')->insert($data);
+        $query = $this->insert($data);
         return $query;
     }
     public function delPost($id)
@@ -118,18 +129,18 @@ class AdminModel extends Model
     }
 
     /*** Admin ***/
-    public function getAdmin($id=false)
-	{
-		if($id === false){
-			$query = $this->db->query('SELECT * FROM admin');
-			$results = $query->getResult();
-		}else{
-			$query = $this->db->query("SELECT * FROM admin WHERE idadmin=".$id." ");
-			$results = $query->getRow();
-		}
-		return $results;
+    public function getAdmin($id = false)
+    {
+        if ($id === false) {
+            $query = $this->db->query('SELECT * FROM admin');
+            $results = $query->getResult();
+        } else {
+            $query = $this->db->query("SELECT * FROM admin WHERE idadmin=" . $id . " ");
+            $results = $query->getRow();
+        }
+        return $results;
     }
-    
+
     public function getAdminByEmail($email)
     {
         $query = $this->db->table('admin')->getWhere(['email' => $email]);
@@ -138,46 +149,46 @@ class AdminModel extends Model
         return $results;
     }
 
-    public function getSumPost($id=false)
-	{
-		if($id === false){
-			$query = $this->db->query('SELECT * FROM post JOIN kategori ON post.idkategori=kategori.idkategori');
-			$results = $query->getResult();
-		}else{
-			$query = $this->db->query("SELECT * FROM post JOIN kategori ON post.idkategori=kategori.idkategori WHERE post.idkategori=".$id." ");
-			$results = $query->getRow();
-		}
-		return $results;
+    public function getSumPost($id = false)
+    {
+        if ($id === false) {
+            $query = $this->db->query('SELECT * FROM post JOIN kategori ON post.idkategori=kategori.idkategori');
+            $results = $query->getResult();
+        } else {
+            $query = $this->db->query("SELECT * FROM post JOIN kategori ON post.idkategori=kategori.idkategori WHERE post.idkategori=" . $id . " ");
+            $results = $query->getRow();
+        }
+        return $results;
     }
 
     public function editPasswordAdmin($data, $id)
     {
-        $query = $this->db->table('admin')->update($data,['idadmin' => $id]);
+        $query = $this->db->table('admin')->update($data, ['idadmin' => $id]);
         return $query;
     }
 
     public function cekPasswordAdmin($password, $id)
     {
-        $query = $this->db->query("SELECT * FROM admin WHERE idadmin=".$id." AND password='".$password."'");
+        $query = $this->db->query("SELECT * FROM admin WHERE idadmin=" . $id . " AND password='" . $password . "'");
         $result = $query->getRow();
         return $result;
     }
 
     /*** Login & Signup ***/
-    public function loginAdmin($email,$password)
+    public function loginAdmin($email, $password)
     {
-			$query = $this->db->query("SELECT * FROM admin WHERE email='".$email."'AND password='".$password."' ");
-			$results = $query->getRow();
+        $query = $this->db->query("SELECT * FROM admin WHERE email='" . $email . "'AND password='" . $password . "' ");
+        $results = $query->getRow();
 
-		return $results;
+        return $results;
     }
 
-    public function loginPenulis($email,$password)
+    public function loginPenulis($email, $password)
     {
-			$query = $this->db->query("SELECT * FROM penulis WHERE email='".$email."'AND password='".$password."' ");
-			$results = $query->getRow();
+        $query = $this->db->query("SELECT * FROM penulis WHERE email='" . $email . "'AND password='" . $password . "' ");
+        $results = $query->getRow();
 
-		return $results;
+        return $results;
     }
 
     public function signup($data)
@@ -186,4 +197,3 @@ class AdminModel extends Model
         return $query;
     }
 }
-?>

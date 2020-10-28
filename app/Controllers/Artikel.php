@@ -1,4 +1,6 @@
-<?php namespace App\Controllers;
+<?php
+
+namespace App\Controllers;
 
 use App\Models\AdminModel;
 
@@ -7,7 +9,7 @@ class Artikel extends BaseController
     public function __construct()
     {
         $this->post = new AdminModel();
-        helper(['form','url']);
+        helper(['form', 'url']);
     }
 
     public function index($id)
@@ -20,10 +22,10 @@ class Artikel extends BaseController
             'title'     => 'View'
         ];
         $session = \Config\Services::session();
-        if (isset($session->username)){
-            return view('templates/main',['page' => 'penulis/view_post', 'data' => $data]);
-        }else {
-            return view('templates/main',['page' => 'penulis/loginPenulis', 'data' => $data]);
+        if (isset($session->username)) {
+            return view('templates/main', ['page' => 'penulis/view_post', 'data' => $data]);
+        } else {
+            return view('templates/main', ['page' => 'penulis/loginPenulis', 'data' => $data]);
         }
     }
 
@@ -37,10 +39,10 @@ class Artikel extends BaseController
             'title'         => 'Edit'
         ];
         $session = \Config\Services::session();
-        if (isset($session->username)){
-            return view('templates/main',['page' => 'penulis/edit_post', 'data' => $data]);
-        }else {
-            return view('templates/main',['page' => 'penulis/loginPenulis', 'data' => $data]);
+        if (isset($session->username)) {
+            return view('templates/main', ['page' => 'penulis/edit_post', 'data' => $data]);
+        } else {
+            return view('templates/main', ['page' => 'penulis/loginPenulis', 'data' => $data]);
         }
     }
 
@@ -54,10 +56,10 @@ class Artikel extends BaseController
             'title'         => 'Add'
         ];
         $session = \Config\Services::session();
-        if (isset($session->username)){
-            return view('templates/main',['page' => 'penulis/add_post','data' => $data]);
-        }else {
-            return view('templates/main',['page' => 'penulis/loginPenulis', 'data' => $data]);
+        if (isset($session->username)) {
+            return view('templates/main', ['page' => 'penulis/add_post', 'data' => $data]);
+        } else {
+            return view('templates/main', ['page' => 'penulis/loginPenulis', 'data' => $data]);
         }
     }
 
@@ -70,72 +72,71 @@ class Artikel extends BaseController
     public function save($idpenulis)
     {
         $data = [
-            'judul'		    => $this->request->getPost('judul'),
-            'idkategori'	=> $this->request->getPost('kategori'),
+            'judul'            => $this->request->getPost('judul'),
+            'idkategori'    => $this->request->getPost('kategori'),
             'isi_post'      => $this->request->getPost('isi'),
             'gambar'        => $this->request->getPost('gambar'),
-            'tgl_insert'	=> $this->request->getPost('tgl_insert'),
             'tgl_update'    => $this->request->getPost('tgl_insert'),
             'idpenulis'     => $idpenulis
         ];
 
         $validation_rules = [
-			'judul' => [
-				'rules' => 'required|min_length[5]|max_length[50]',
-				'label' => 'Name'
-            ],	
+            'judul' => [
+                'rules' => 'required|min_length[5]|max_length[50]',
+                'label' => 'Name'
+            ],
             'kategori'      => 'required',
-            'isi'           => 'required',
-            'tgl_insert'    => 'required'
-		];
+            'isi'           => 'required'
+        ];
 
-        if ($this->validate($validation_rules)){
-			$query = $this->post->addPost($data);
-			if($query){
-				session()->setFlashdata('success', 'Post data has been updated');
-				return redirect()->to(base_url('artikel/index').'/'.$idpenulis); 
+        if ($this->validate($validation_rules)) {
+            $query = $this->post->addPost($data);
+            if ($query) {
+                session()->setFlashdata('success', 'Post data has been updated');
+                return redirect()->to(base_url('artikel/index') . '/' . $idpenulis);
             }
-        }else{
-			return redirect()->to(base_url('artikel/add').'/'.$idpenulis)->withInput(); 
-		}
+        } else {
+            return redirect()->to(base_url('artikel/add') . '/' . $idpenulis)->withInput();
+        }
     }
 
     public function update($idpost)
-	{   
+    {
         $data = [
-            'judul'		    => $this->request->getPost('judul'),
-            'idkategori'	=> $this->request->getPost('kategori'),
+            'judul'            => $this->request->getPost('judul'),
+            'idkategori'    => $this->request->getPost('kategori'),
             'isi_post'      => $this->request->getPost('isi'),
             'gambar'        => $this->request->getPost('gambar'),
-            'tgl_insert'	=> $this->request->getPost('tgl_insert'),
+            'tgl_insert'    => $this->request->getPost('tgl_insert'),
             'tgl_update'    => $this->request->getPost('tgl_update')
         ];
 
         $idpenulis = $this->request->getPost('disabledIdPenulis');
-        
-		$validation_rules = [
-			'judul' => [
-				'rules' => 'required|min_length[5]|max_length[50]',
-				'label' => 'Name'
-            ],	
+
+        $validation_rules = [
+            'judul' => [
+                'rules' => 'required|min_length[5]|max_length[50]',
+                'label' => 'Name'
+            ],
             'kategori'      => 'required',
             'isi'           => 'required',
             'tgl_insert'    => 'required',
             'tgl_update'    => 'required'
-		];
-		
-		if ($this->validate($validation_rules)){
-			$query = $this->post->editPost($data,$idpost);
-			if($query){
-				session()->setFlashdata('success', 'Post data has been updated');
-				return redirect()->to(base_url('artikel/index').'/'.$idpenulis); 
+        ];
+
+        if ($this->validate($validation_rules)) {
+            $query = $this->post->editPost($data, $idpost);
+            if ($query) {
+                session()->setFlashdata('success', 'Post data has been updated');
+                return redirect()->to(base_url('artikel/index') . '/' . $idpenulis);
             }
-        }else{
-			return redirect()->to(base_url('artikel/edit').'/'.$idpost)->withInput(); 
-		}
+        } else {
+            return redirect()->to(base_url('artikel/edit') . '/' . $idpost)->withInput();
+        }
     }
-    
-    public function delete($idpost){
+
+    public function delete($idpost)
+    {
         $data = [
             'row'       => $this->post->getPost($idpost),
             'session'   => \Config\Services::session(),
@@ -143,20 +144,20 @@ class Artikel extends BaseController
             'title'     => 'Delete'
         ];
         $session = \Config\Services::session();
-        if (isset($session->username)){
-            return view('templates/main',['page' => 'penulis/delete_post','data' => $data]);
-        }else {
-            return view('templates/main',['page' => 'penulis/loginPenulis', 'data' => $data]);
+        if (isset($session->username)) {
+            return view('templates/main', ['page' => 'penulis/delete_post', 'data' => $data]);
+        } else {
+            return view('templates/main', ['page' => 'penulis/loginPenulis', 'data' => $data]);
         }
     }
 
-    public function del($idpost){
+    public function del($idpost)
+    {
         $penulis = $this->post->getPost($idpost);
         $query = $this->post->delPost($idpost);
         if ($query) {
             session()->setFlashdata('success', 'Post data has been deleted');
-            return redirect()->to(base_url('artikel/index/'.$penulis->idpenulis));
+            return redirect()->to(base_url('artikel/index/' . $penulis->idpenulis));
         }
     }
 }
-?>
