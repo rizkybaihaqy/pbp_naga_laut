@@ -107,8 +107,8 @@ class Artikel extends BaseController
             'isi_post'      => $this->request->getPost('isi'),
             'gambar'        => $this->request->getPost('gambar'),
         ];
-
-        $idpenulis = $this->request->getPost('disabledIdPenulis');
+        $session = \Config\Services::session();
+        $idpenulis = $session->id;
 
         $validation_rules = [
             'judul' => [

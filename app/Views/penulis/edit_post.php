@@ -35,12 +35,6 @@
                         <input type="text" class="form-control <?php if ($validation->hasError('gambar')) echo 'is-invalid'; ?>" id="gambar" name="gambar" value="<?php echo (!is_null(old('gambar'))) ? old('gambar') : $row->gambar; ?>">
                     </div>
 
-                    <fieldset>
-                        <div class="form-group d-none">
-                            <label for="disabledIdPenulis">Id Penulis: (<i>Anda tidak perlu merubahnya</i>)</label>
-                            <input type="text" class="form-control" id="disabledIdPenulis" name="disabledIdPenulis" value="<?php echo $row->idpenulis; ?>">
-                        </div>
-                    </fieldset>
                     <br>
                     <button type="submit" class="btn btn-primary" name="submit" value="submit">Submit</button>&nbsp;
                     <a href="<?php echo base_url('artikel/index') . '/' . $row->idpenulis; ?>" class="btn btn-secondary">Cancel</a>
