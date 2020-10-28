@@ -112,7 +112,8 @@ class AdminModel extends Model
 
     public function editPost($data, $id)
     {
-        $query = $this->db->table('post')->update($data, ['idpost' => $id]);
+        //$query = $this->db->table('post')->update($data, ['idpost' => $id]);
+        $query = $this->update($id, $data);
         return $query;
     }
 

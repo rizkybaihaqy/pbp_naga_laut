@@ -76,7 +76,6 @@ class Artikel extends BaseController
             'idkategori'    => $this->request->getPost('kategori'),
             'isi_post'      => $this->request->getPost('isi'),
             'gambar'        => $this->request->getPost('gambar'),
-            'tgl_update'    => $this->request->getPost('tgl_insert'),
             'idpenulis'     => $idpenulis
         ];
 
@@ -107,8 +106,6 @@ class Artikel extends BaseController
             'idkategori'    => $this->request->getPost('kategori'),
             'isi_post'      => $this->request->getPost('isi'),
             'gambar'        => $this->request->getPost('gambar'),
-            'tgl_insert'    => $this->request->getPost('tgl_insert'),
-            'tgl_update'    => $this->request->getPost('tgl_update')
         ];
 
         $idpenulis = $this->request->getPost('disabledIdPenulis');
@@ -120,8 +117,6 @@ class Artikel extends BaseController
             ],
             'kategori'      => 'required',
             'isi'           => 'required',
-            'tgl_insert'    => 'required',
-            'tgl_update'    => 'required'
         ];
 
         if ($this->validate($validation_rules)) {
