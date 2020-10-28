@@ -1,0 +1,41 @@
+body {
+  background: #121212;
+  margin-bottom: 100px;
+}
+
+#aboutPage {
+  background: url(../imgs/bg4.jpg) top center;
+  background-size: cover;
+}
+
+.bg-black {
+  background: #121212;
+}
+
+#formContactContent .fa-envelope-open {
+  font-size: 15rem;
+}
+
+.header .jumbotron {
+  background: url(../imgs/bg.jpg) no-repeat center center;
+  background-size: cover;
+  color: #fff;
+  min-height: 600px;
+}
+
+.header .jumbotron-smol {
+  background: url(../imgs/bg2.jpg) no-repeat center center;
+  background-size: cover;
+  color: #fff;
+  min-height: 10px;
+  padding: 5px 0px;
+}
+
+.content .card-img-overlay {
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.navbar.scrolled {
+  background: #121212;
+  transition: background 300ms;
+}
