@@ -71,24 +71,40 @@ class Artikel extends BaseController
     // }
     public function save($idpenulis)
     {
-        $data = [
-            'judul'            => $this->request->getPost('judul'),
-            'idkategori'    => $this->request->getPost('kategori'),
-            'isi_post'      => $this->request->getPost('isi'),
-            'gambar'        => $this->request->getPost('gambar'),
-            'idpenulis'     => $idpenulis
-        ];
-
         $validation_rules = [
             'judul' => [
                 'rules' => 'required|min_length[5]|max_length[50]',
                 'label' => 'Name'
             ],
             'kategori'      => 'required',
-            'isi'           => 'required'
+            'isi'           => 'required',
+            'gambar'        => [
+                'rules' => 'uploaded[gambar]|max_size[gambar,10486]|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png]',
+                'errors' => [
+                    'uploaded' => 'pilih gambar terlebih dahulu',
+                    'max_size' => 'file yang anda pilih terlalu besar',
+                    'is_image' => 'file yang anda pilih bukan gambar',
+                    'mime_in' => 'file yang anda pilih bukan gambar',
+                ]
+            ]
         ];
 
         if ($this->validate($validation_rules)) {
+            //ambil file
+            $fileGambar = $this->request->getFile('gambar');
+            //bangkitkan nama acak
+            $namaFileGambar = $fileGambar->getRandomName();
+            //pindah ke public/img
+            $fileGambar->move('imgs', $namaFileGambar);
+
+            $data = [
+                'judul'         => $this->request->getPost('judul'),
+                'idkategori'    => $this->request->getPost('kategori'),
+                'isi_post'      => $this->request->getPost('isi'),
+                'gambar'        => $namaFileGambar,
+                'idpenulis'     => $idpenulis
+            ];
+            //dd($data);
             $query = $this->post->addPost($data);
             if ($query) {
                 session()->setFlashdata('success', 'Post data has been updated');
@@ -101,12 +117,6 @@ class Artikel extends BaseController
 
     public function update($idpost)
     {
-        $data = [
-            'judul'            => $this->request->getPost('judul'),
-            'idkategori'    => $this->request->getPost('kategori'),
-            'isi_post'      => $this->request->getPost('isi'),
-            'gambar'        => $this->request->getPost('gambar'),
-        ];
         $session = \Config\Services::session();
         $idpenulis = $session->id;
 
@@ -117,9 +127,42 @@ class Artikel extends BaseController
             ],
             'kategori'      => 'required',
             'isi'           => 'required',
+            'gambar'        => [
+                'rules' => 'max_size[gambar,10486]|is_image[gambar]|mime_in[gambar,image/jpg,image/jpeg,image/png]',
+                'errors' => [
+                    'max_size' => 'file yang anda pilih terlalu besar',
+                    'is_image' => 'file yang anda pilih bukan gambar',
+                    'mime_in' => 'file yang anda pilih bukan gambar',
+                ]
+            ]
         ];
 
         if ($this->validate($validation_rules)) {
+
+            $fileGambar = $this->request->getFile('gambar');
+            $namaFileGambarLama = $this->request->getVar('gambarLama');
+
+            //apakah user tidak upload gamabr
+            if ($fileGambar->getError(4)) {
+                $namaFileGambar = $namaFileGambarLama;
+            } else {
+                //ganti nama file jadi random
+                $namaFileGambar = $fileGambar->getRandomName();
+
+                //pindahkan dari tmp ke img
+                $fileGambar->move('imgs', $namaFileGambar);
+
+                //hapus file lama
+                unlink('imgs/' . $namaFileGambarLama);
+            }
+
+            $data = [
+                'judul'         => $this->request->getPost('judul'),
+                'idkategori'    => $this->request->getPost('kategori'),
+                'isi_post'      => $this->request->getPost('isi'),
+                'gambar'        => $namaFileGambar,
+            ];
+
             $query = $this->post->editPost($data, $idpost);
             if ($query) {
                 session()->setFlashdata('success', 'Post data has been updated');
@@ -148,6 +191,12 @@ class Artikel extends BaseController
 
     public function del($idpost)
     {
+        //mengambil artikel
+        $artikel = $this->post->find($idpost);
+
+        //hapus gambar
+        unlink('imgs/' . $artikel['gambar']);
+
         $penulis = $this->post->getPost($idpost);
         $query = $this->post->delPost($idpost);
         if ($query) {

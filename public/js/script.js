@@ -30,6 +30,23 @@ function validateForm(){
     message();
 }
 
+//fungsi lihat gambar yg di upload
+function previewImage()
+{
+    const thumbnail = document.querySelector('#gambar');
+    const thumbnailLabel = document.querySelector('.custom-file-label');
+    const thumbnailPreview = document.querySelector('.img-preview');
+
+    thumbnailLabel.textContent = thumbnail.files[0].name;
+
+    const fileThumbnail = new FileReader();
+    fileThumbnail.readAsDataURL(thumbnail.files[0]);
+
+    fileThumbnail.onload = function(e){
+        thumbnailPreview.src = e.target.result;
+    }
+}
+
 $(document).ready(function(){
     $(".navbar-toggler").click(function(){
       $("#navbarMain").toggleClass("bg-black");

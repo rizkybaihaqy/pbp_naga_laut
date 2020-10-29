@@ -8,7 +8,8 @@
         <div class="card">
             <div class="card-header">Edit Post</div>
             <div class="card-body">
-                <form action="<?php echo base_url('artikel/update/' . $row->idpost); ?>" method="post" autocomplete="on">
+                <form action="<?php echo base_url('artikel/update/' . $row->idpost); ?>" method="post" autocomplete="on" enctype="multipart/form-data">
+                    <input type="hidden" name="gambarLama" value="<?php echo $row->gambar; ?>">
                     <div class="form-group">
                         <label for="judul">Judul:</label>
                         <input type="text" class="form-control <?php if ($validation->hasError('judul')) echo 'is-invalid'; ?>" id="judul" name="judul" value="<?php echo (!is_null(old('judul'))) ? old('judul') : $row->judul; ?>">
@@ -31,8 +32,22 @@
                         <textarea name="isi" id="isi" class="form-control" cols="30" rows="10"><?php echo (!is_null(old('isi_post'))) ? old('isi_post') : $row->isi_post; ?></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="gambar">Path Gambar:</label>
-                        <input type="text" class="form-control <?php if ($validation->hasError('gambar')) echo 'is-invalid'; ?>" id="gambar" name="gambar" value="<?php echo (!is_null(old('gambar'))) ? old('gambar') : $row->gambar; ?>">
+                        <label for="gambar">Upload Gambar:</label>
+                        <div class="custom-file">
+                            <input type="file" id="gambar" name="gambar" onchange="previewImage()" class="custom-file-input 
+                            <?php echo ($validation->hasError('gambar')) ? 'is-invalid' : '' ?>">
+                            <div class="invalid-feedback">
+                                <?php echo $validation->getError('gambar'); ?>
+                            </div>
+                            <label class="custom-file-label" for="gambar">Choose file</label>
+                        </div>
+                        <div class="mt-3">
+                            <img src="/imgs/<?php echo $row->gambar; ?>" alt="preview image" class="img-thumbnail img-preview">
+                        </div>
+
+                        <!-- <input type="text" class="form-control <?php //if ($validation->hasError('gambar')) echo 'is-invalid'; 
+                                                                    ?>" id="gambar" name="gambar" value="<?php //echo (!is_null(old('gambar'))) ? old('gambar') : $row->gambar; 
+                                                                                                            ?>"> -->
                     </div>
 
                     <br>
