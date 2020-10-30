@@ -16,7 +16,7 @@
                 <?php endif; ?>
                 <?php for ($i = sizeof($post) - 1; $i >= 0; $i--) { ?>
                     <div class="card bg-dark text-white mb-5">
-                        <img src="/imgs/<?php echo $post[$i]->gambar; ?>" class="card-img" alt="patch">
+                        <img src="/imgs/user_upload/<?php echo $post[$i]->gambar; ?>" class="card-img" alt="patch">
                         <div class="card-img-overlay">
                             <h3 class="card-title"><?php echo $post[$i]->judul; ?></h3>
                             <p class="card-text"><?php echo substr($post[$i]->isi_post, 0, 1000) . '...'; ?></p>

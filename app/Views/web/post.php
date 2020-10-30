@@ -3,7 +3,7 @@
                 <div class="card mb-3">
                     <?php //echo dd($post);
                     ?>
-                    <img src="/imgs/<?php echo $post->gambar; ?>" class="card-img-top" alt="patch">
+                    <img src="/imgs/user_upload/<?php echo $post->gambar; ?>" class="card-img-top" alt="patch">
                     <div class="card-img-overlay">
                         <?php //echo d($post);
                         ?>
@@ -40,30 +40,30 @@
                                                         ?></h5>
                                 <p class="card-text"><?php echo $komentar[$i]->isi
                                                         ?></p>
-                            <?php if($session->id == $post->idpenulis){ ?>
-                                <div class="d-flex justify-content-end">
-                                    <form action="<?php echo base_url('post/delKomentar/' . $komentar[$i]->idkomentar . '/' . $komentar[$i]->idpost); ?>" method="post">
-                                        <button class="btn btn-outline-danger" type="submit" name="submit" value="submit">Hapus Komentar</button>
-                                    </form>
-                                    <!-- <a href="<?php //echo base_url('post/del') . '/' . $komentar[$i]->idkomentar; 
-                                                    ?>" class="btn-outline-danger">
+                                <?php if ($session->id == $post->idpenulis) { ?>
+                                    <div class="d-flex justify-content-end">
+                                        <form action="<?php echo base_url('post/delKomentar/' . $komentar[$i]->idkomentar . '/' . $komentar[$i]->idpost); ?>" method="post">
+                                            <button class="btn btn-outline-danger" type="submit" name="submit" value="submit">Hapus Komentar</button>
+                                        </form>
+                                        <!-- <a href="<?php //echo base_url('post/del') . '/' . $komentar[$i]->idkomentar; 
+                                                        ?>" class="btn-outline-danger">
                                         Hapus Komentar</a> -->
-                                </div>
-                            <?php } ?>
+                                    </div>
+                                <?php } ?>
                                 <hr>
                             <?php } ?>
                         </div>
                     </div>
-                    <?php if ($session->username == 'penulis'){ ?>
-                    <div class="form-group text-light">
-                        <form action="<?php echo base_url('post/saveKomentar/'.$post->idpost); ?>" method="post">
-                            <label for="comment">Tulis Komment:</label>
-                            <textarea class="form-control" rows="5" id="comment" name="comment"></textarea>
-                            <div class="d-flex justify-content-end">
-                                <button class="btn btn-outline-light mt-2" type="submit" name="submit" value="submit">Submit</button>
-                            </div>
-                        </form>
-                    </div>
+                    <?php if ($session->username == 'penulis') { ?>
+                        <div class="form-group text-light">
+                            <form action="<?php echo base_url('post/saveKomentar/' . $post->idpost); ?>" method="post">
+                                <label for="comment">Tulis Komment:</label>
+                                <textarea class="form-control" rows="5" id="comment" name="comment"></textarea>
+                                <div class="d-flex justify-content-end">
+                                    <button class="btn btn-outline-light mt-2" type="submit" name="submit" value="submit">Submit</button>
+                                </div>
+                            </form>
+                        </div>
                     <?php } ?>
                 </section>
             </div>

@@ -95,7 +95,7 @@ class Artikel extends BaseController
             //bangkitkan nama acak
             $namaFileGambar = $fileGambar->getRandomName();
             //pindah ke public/img
-            $fileGambar->move('imgs', $namaFileGambar);
+            $fileGambar->move('imgs/user_upload', $namaFileGambar);
 
             $data = [
                 'judul'         => $this->request->getPost('judul'),
@@ -150,10 +150,10 @@ class Artikel extends BaseController
                 $namaFileGambar = $fileGambar->getRandomName();
 
                 //pindahkan dari tmp ke img
-                $fileGambar->move('imgs', $namaFileGambar);
+                $fileGambar->move('imgs/user_upload', $namaFileGambar);
 
                 //hapus file lama
-                unlink('imgs/' . $namaFileGambarLama);
+                unlink('imgs/user_upload/' . $namaFileGambarLama);
             }
 
             $data = [
@@ -195,7 +195,7 @@ class Artikel extends BaseController
         $artikel = $this->post->find($idpost);
 
         //hapus gambar
-        unlink('imgs/' . $artikel['gambar']);
+        unlink('imgs/user_upload/' . $artikel['gambar']);
 
         $penulis = $this->post->getPost($idpost);
         $query = $this->post->delPost($idpost);

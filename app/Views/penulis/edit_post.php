@@ -42,7 +42,7 @@
                             <label class="custom-file-label" for="gambar">Choose file</label>
                         </div>
                         <div class="mt-3">
-                            <img src="/imgs/<?php echo $row->gambar; ?>" alt="preview image" class="img-thumbnail img-preview">
+                            <img src="/imgs/user_upload/<?php echo $row->gambar; ?>" alt="preview image" class="img-thumbnail img-preview">
                         </div>
 
                         <!-- <input type="text" class="form-control <?php //if ($validation->hasError('gambar')) echo 'is-invalid'; 

@@ -43,7 +43,7 @@
             <div class="col-12">
                 <?php for ($i = 0; $i < sizeof($post); $i++) { ?>
                     <div class="card bg-dark text-white mb-5">
-                        <img src="/imgs/<?php echo $post[$i]->gambar; ?>" class="card-img" alt="patch">
+                        <img src="/imgs/user_upload/<?php echo $post[$i]->gambar; ?>" class="card-img" alt="patch">
                         <div class="card-img-overlay">
                             <h3 class="card-title"><?php echo $post[$i]->judul; ?></h3>
                             <p class="lead">By : <?php echo $post[$i]->nama; ?></p>
