@@ -52,7 +52,7 @@
 
                     <br>
                     <button type="submit" class="btn btn-primary" name="submit" value="submit">Submit</button>&nbsp;
-                    <a href="<?php echo base_url('artikel/index') . '/' . $row->idpenulis; ?>" class="btn btn-secondary">Cancel</a>
+                    <a href="<?php echo base_url('artikel'); ?>" class="btn btn-secondary">Cancel</a>
                 </form>
             </div>
         </div>

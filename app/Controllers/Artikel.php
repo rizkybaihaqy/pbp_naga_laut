@@ -12,11 +12,13 @@ class Artikel extends BaseController
         helper(['form', 'url']);
     }
 
-    public function index($id)
+    public function index()
     {
+        $session = \Config\Services::session();
+
         $data = [
-            'post'      => $this->post->getAllPost($id),
-            'penulis'   => $this->post->getPenulis($id),
+            'post'      => $this->post->getAllPost($session->id),
+            'penulis'   => $this->post->getPenulis($session->id),
             'session' => \Config\Services::session(),
             'validation' => \Config\Services::validation(),
             'title'     => 'View'
@@ -39,23 +41,29 @@ class Artikel extends BaseController
             'title'         => 'Edit'
         ];
         $session = \Config\Services::session();
+
         if (isset($session->username)) {
-            return view('templates/main', ['page' => 'penulis/edit_post', 'data' => $data]);
+            if ($data['row']->idpenulis == $session->id) {
+                return view('templates/main', ['page' => 'penulis/edit_post', 'data' => $data]);
+            } else {
+                return redirect()->to(base_url('artikel'));
+            }
         } else {
             return view('templates/main', ['page' => 'penulis/loginPenulis', 'data' => $data]);
         }
     }
 
-    public function add($idpenulis)
+    public function add()
     {
+        $session = \Config\Services::session();
         $data = [
-            'penulis'       => $this->post->getPenulis($idpenulis),
+            'penulis'       => $this->post->getPenulis($session->id),
             'kategori'      => $this->post->getCategory(),
             'validation'    => \Config\Services::validation(),
             'session'       => \Config\Services::session(),
             'title'         => 'Add'
         ];
-        $session = \Config\Services::session();
+
         if (isset($session->username)) {
             return view('templates/main', ['page' => 'penulis/add_post', 'data' => $data]);
         } else {
@@ -69,8 +77,10 @@ class Artikel extends BaseController
     //     $satukan = implode("-",$satu);
     //     return $satukan;
     // }
-    public function save($idpenulis)
+    public function save()
     {
+        $session = \Config\Services::session();
+
         $validation_rules = [
             'judul' => [
                 'rules' => 'required|min_length[5]|max_length[50]',
@@ -102,16 +112,16 @@ class Artikel extends BaseController
                 'idkategori'    => $this->request->getPost('kategori'),
                 'isi_post'      => $this->request->getPost('isi'),
                 'gambar'        => $namaFileGambar,
-                'idpenulis'     => $idpenulis
+                'idpenulis'     => $session->id
             ];
             //dd($data);
             $query = $this->post->addPost($data);
             if ($query) {
                 session()->setFlashdata('success', 'Post data has been updated');
-                return redirect()->to(base_url('artikel/index') . '/' . $idpenulis);
+                return redirect()->to(base_url('artikel/index'));
             }
         } else {
-            return redirect()->to(base_url('artikel/add') . '/' . $idpenulis)->withInput();
+            return redirect()->to(base_url('artikel/add'))->withInput();
         }
     }
 
@@ -183,7 +193,11 @@ class Artikel extends BaseController
         ];
         $session = \Config\Services::session();
         if (isset($session->username)) {
-            return view('templates/main', ['page' => 'penulis/delete_post', 'data' => $data]);
+            if ($data['row']->idpenulis == $session->id) {
+                return view('templates/main', ['page' => 'penulis/delete_post', 'data' => $data]);
+            } else {
+                return redirect()->to(base_url('artikel'));
+            }
         } else {
             return view('templates/main', ['page' => 'penulis/loginPenulis', 'data' => $data]);
         }

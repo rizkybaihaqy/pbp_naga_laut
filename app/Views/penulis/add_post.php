@@ -8,7 +8,7 @@
         <div class="card">
             <div class="card-header">Add Post</div>
             <div class="card-body">
-                <form action="<?php echo base_url('artikel/save') . '/' . $penulis->idpenulis; ?>" method="post" autocomplete="on" enctype="multipart/form-data">
+                <form action="<?php echo base_url('artikel/save'); ?>" method="post" autocomplete="on" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="judul">Judul:</label>
                         <input type="text" class="form-control <?php if ($validation->hasError('judul')) echo 'is-invalid'; ?>" id="judul" name="judul" value="<?php echo old('judul'); ?>">
@@ -51,7 +51,7 @@
 
                     <br>
                     <button type="submit" class="btn btn-primary" name="submit" value="submit">Submit</button>&nbsp;
-                    <a href="<?php echo base_url('artikel/index') . '/' . $penulis->idpenulis; ?>" class="btn btn-secondary">Cancel</a>
+                    <a href="<?php echo base_url('artikel'); ?>" class="btn btn-secondary">Cancel</a>
                 </form>
             </div>
         </div>
