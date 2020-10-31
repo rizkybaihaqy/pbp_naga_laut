@@ -118,7 +118,7 @@ class Artikel extends BaseController
             $query = $this->post->addPost($data);
             if ($query) {
                 session()->setFlashdata('success', 'Post data has been updated');
-                return redirect()->to(base_url('artikel/index'));
+                return redirect()->to(base_url('artikel'));
             }
         } else {
             return redirect()->to(base_url('artikel/add'))->withInput();
@@ -176,7 +176,7 @@ class Artikel extends BaseController
             $query = $this->post->editPost($data, $idpost);
             if ($query) {
                 session()->setFlashdata('success', 'Post data has been updated');
-                return redirect()->to(base_url('artikel/index') . '/' . $idpenulis);
+                return redirect()->to(base_url('artikel'));
             }
         } else {
             return redirect()->to(base_url('artikel/edit') . '/' . $idpost)->withInput();
@@ -215,7 +215,7 @@ class Artikel extends BaseController
         $query = $this->post->delPost($idpost);
         if ($query) {
             session()->setFlashdata('success', 'Post data has been deleted');
-            return redirect()->to(base_url('artikel/index/' . $penulis->idpenulis));
+            return redirect()->to(base_url('artikel'));
         }
     }
 }

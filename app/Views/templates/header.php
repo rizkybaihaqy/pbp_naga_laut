@@ -30,7 +30,7 @@
 
 <body>
     <nav id="navbarMain" class="navbar navbar-dark navbar-expand-md py-0 fixed-top">
-        <a href="<?php echo base_url('web/'); ?>" class="navbar-brand">Punk From The West <i class="fas fa-fist-raised"></i></a>
+        <a href="<?php echo base_url(); ?>" class="navbar-brand">Punk From The West <i class="fas fa-fist-raised"></i></a>
         <button class="navbar-toggler" data-toggle="collapse" data-target="#navLinks" aria-label="toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
