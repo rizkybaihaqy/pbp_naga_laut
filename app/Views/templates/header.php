@@ -49,8 +49,8 @@
                         <div class="dropdown-menu">
                             <?php if ($session->username == 'penulis') : ?>
                                 <div>
-                                    <a class="dropdown-item mr-5" href="<?php echo base_url('penulis/index/' . $session->id); ?>">Dashboard Penulis</a>
-                                    <a class="dropdown-item mr-5" href="<?php echo base_url('penulis/profile/' . $session->id); ?>">Profil Penulis</a>
+                                    <a class="dropdown-item mr-5" href="<?php echo base_url('penulis'); ?>">Dashboard Penulis</a>
+                                    <a class="dropdown-item mr-5" href="<?php echo base_url('penulis/profile'); ?>">Profil Penulis</a>
                                 </div>
                             <?php else : ?>
                                 <div>
